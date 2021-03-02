@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Windows;
 
 namespace Calculator
 {
@@ -44,6 +45,31 @@ namespace Calculator
             }
         }
         private DelegateCommand _addCommand;
+
+        public DelegateCommand HelloCommand
+        {
+            get
+            {
+                return this._helloCommand ??= new DelegateCommand(
+                      () => this.HelloExecute(),
+                      () => true);
+            }
+        }
+        private DelegateCommand _helloCommand;
+
+        public Messenger Messenger { get; } = new Messenger();
+
+        public void HelloExecute()
+        {
+            var msg = new DialogBoxMessage(this);
+            msg.Message = "さん、こんにちは。";
+            msg.Button = MessageBoxButton.YesNo;
+            this.Messenger.Send(this, msg);
+            if (msg.Result == MessageBoxResult.Yes)
+            {
+                this.model.X = 2;
+            }
+        }
 
         private readonly Calculators model;
 

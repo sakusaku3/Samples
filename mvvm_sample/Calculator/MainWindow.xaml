@@ -10,6 +10,14 @@
         <local:MainViewModel/>
     </Window.DataContext>
 
+    <local:MessengerBehavior.Actions>
+        <local:ActionCollection SourceObject="{Binding Messenger}">
+            <local:ActionCollection.Collection>
+                <local:DialogBoxAction/>
+            </local:ActionCollection.Collection>
+        </local:ActionCollection>
+    </local:MessengerBehavior.Actions>
+
     <StackPanel>
         <TextBox Text="{Binding X}" HorizontalAlignment="Stretch"/>
         <Label Content="+" HorizontalAlignment="Center"/>
@@ -17,5 +25,6 @@
         <Label Content="=" HorizontalAlignment="Center"/>
         <TextBox Text="{Binding Result}" HorizontalAlignment="Stretch"/>
         <Button Content="ADD" Command="{Binding AddCommand}"/>
+        <Button Content="Hello" Command="{Binding HelloCommand}"/>
     </StackPanel>
 </Window>

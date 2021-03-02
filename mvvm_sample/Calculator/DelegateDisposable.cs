@@ -15,10 +15,10 @@ namespace Calculator
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		/// <param name="p_disposeAction">解放処理</param>
-		public DelegateDisposable(Action p_disposeAction)
+		/// <param name="disposeAction">解放処理</param>
+		public DelegateDisposable(Action disposeAction)
 		{
-			this.disposeAction = p_disposeAction;
+			this.disposeAction = disposeAction;
 		}
 
 		/// <summary>
