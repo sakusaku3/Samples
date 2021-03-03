@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 
 namespace Calculator
@@ -15,33 +14,40 @@ namespace Calculator
             FrameworkElement recipient, 
             Action<TMessage> action)
         {
-            this.list.Add(new ActionInfo
-            {
-                Type = typeof(TMessage),
-                Sender = recipient.DataContext as INotifyPropertyChanged,
-                Action = action,
-            });
+            this.list.Add(new ActionInfo(
+                typeof(TMessage),
+                recipient.DataContext as INotifyPropertyChanged,
+                action));
         }
 
         public void Send<TMessage>(
             INotifyPropertyChanged sender, 
             TMessage message)
         {
-            var query = this.list
+            var actions = this.list
                 .Where(x => x.Sender == sender && x.Type == message.GetType())
-                .Select(x => x.Action as Action<TMessage>);
+                .Select(x => x.Action)
+                .OfType<Action<TMessage>>();
 
-            foreach (var action in query)
-            {
+            foreach (var action in actions)
                 action.Invoke(message);
-            }
         }
 
         private class ActionInfo
         {
-            public Type Type { get; set; }
-            public INotifyPropertyChanged Sender { get; set; }
-            public Delegate Action { get; set; }
+            public Type Type { get; }
+            public INotifyPropertyChanged Sender { get; }
+            public Delegate Action { get; }
+
+            public ActionInfo(
+                Type type,
+                INotifyPropertyChanged sender,
+                Delegate action)
+            {
+                this.Type = type;
+                this.Sender = sender;
+                this.Action = action;
+            }
         }
     }
 }

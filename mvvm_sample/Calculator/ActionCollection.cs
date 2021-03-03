@@ -1,26 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Windows;
 
 namespace Calculator
 {
     public class ActionCollection : Freezable
     {
-        private Collection<IViewAction> _collection = new Collection<IViewAction>();
+        public Collection<IViewAction> Collection { get; } = new Collection<IViewAction>();
 
-        public Collection<IViewAction> Collection
+        public void RegisterAll(FrameworkElement recipient)
         {
-            get { return _collection; }
-        }
-
-        public void RegisterAll(FrameworkElement Recipient)
-        {
-            Messenger mes = (SourceObject as Messenger);
+            var mes = this.SourceObject as Messenger;
             foreach (var action in this.Collection)
             {
-                action.Register(Recipient, mes);
+                action.Register(recipient, mes);
             }
         }
 
@@ -31,7 +24,10 @@ namespace Calculator
         }
 
         public static readonly DependencyProperty SourceObjectProperty =
-                DependencyProperty.Register("SourceObject", typeof(object), typeof(ActionCollection));
+            DependencyProperty.Register(
+                nameof(SourceObject),
+                typeof(object), 
+                typeof(ActionCollection));
 
         protected override Freezable CreateInstanceCore()
         {
