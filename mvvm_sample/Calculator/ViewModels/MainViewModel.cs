@@ -1,9 +1,8 @@
-﻿using System.ComponentModel;
-using System.Windows;
+﻿using System.Windows;
 
-namespace Calculator
+namespace Calculator.ViewModels
 {
-    public class MainViewModel : IDataModel
+    public class MainViewModel : NotificationObject
     {
         /// <summary>
         /// X
@@ -71,11 +70,11 @@ namespace Calculator
             }
         }
 
-        private readonly Calculators model;
+        private readonly Models.Calculators model;
 
         public MainViewModel() 
         {
-            this.model = new Calculators();
+            this.model = new Models.Calculators();
 
             this.model.AddPropertyChanged(
                 nameof(this.model.X), () => this.OnPropertyChanged(nameof(this.X)));
@@ -85,13 +84,6 @@ namespace Calculator
 
             this.model.AddPropertyChanged(
                 nameof(this.model.Result), () => this.OnPropertyChanged(nameof(this.Result)));
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        PropertyChangedEventHandler IDataModel.PropertyChangedHandler
-        {
-            get { return this.PropertyChanged; }
         }
     }
 }

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 
 namespace Calculator
 {
-    class MyViewModel : IDataModel
+    class MyViewModel : NotificationObject
     {
         public string Name
         {
@@ -39,13 +35,6 @@ namespace Calculator
             {
                 Name = "";
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        PropertyChangedEventHandler IDataModel.PropertyChangedHandler
-        {
-            get { return this.PropertyChanged; }
         }
     }
 }

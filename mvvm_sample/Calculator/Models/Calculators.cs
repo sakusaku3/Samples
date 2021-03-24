@@ -1,8 +1,6 @@
-﻿using System.ComponentModel;
-
-namespace Calculator
+﻿namespace Calculator.Models
 {
-    class Calculators : IDataModel
+    class Calculators : NotificationObject
     {
         /// <summary>
         /// X
@@ -42,13 +40,6 @@ namespace Calculator
         public bool CanAddExecute()
         {
             return true;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        PropertyChangedEventHandler IDataModel.PropertyChangedHandler
-        {
-            get { return this.PropertyChanged; }
         }
     }
 }
