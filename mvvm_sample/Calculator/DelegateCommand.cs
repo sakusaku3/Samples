@@ -6,7 +6,7 @@ namespace Calculator
 	/// <summary>
 	/// デリゲートを受け取るICommandの実装
 	/// </summary>
-	public class DelegateCommand : ICommand
+	class DelegateCommand : ICommand
 	{
 		private readonly Action execute;
 		private readonly Action<object> argExecute;

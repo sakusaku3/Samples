@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace Calculator
 {
-    public interface IViewAction
+    interface IViewAction
     {
         void Register(FrameworkElement recipient, Messenger messenger);
     }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Calculator
 {
-    public class VmMessage
+    class VmMessage
     {
         public object Sender { get; protected set; }
 

@@ -7,32 +7,7 @@ namespace Calculator
 {
     static class INotifyCollectionChangeExtensions
     {
-        /// <summary>
-        /// senderオブジェクトへ観察対象のプロパティを指定してlistenerオブジェクトのメソッドを登録する
-        /// </summary>
-        /// <param name="p_propertyName">観察対象のプロパティ</param>
-        /// <param name="p_handler">通知時の実行メソッド</param>
-        public static IDisposable AddCollectionChanged<TObject>(
-            this TObject p_self,
-            Action p_handler)
-            where TObject : INotifyCollectionChanged
-        {
-            // 追加/解除対象のイベントハンドラーを用意しておく
-            // このオブジェクトを追加/解除時で、同じものを利用しないと
-            // senderオブジェクトから解除できずにイベントハンドラーが残ってしまう
-            NotifyCollectionChangedEventHandler l_handler =
-                (sender, e) => p_handler.Invoke();
-
-            // イベントハンドラーをsenderへ追加する
-            p_self.CollectionChanged += l_handler;
-
-            // listenerが破棄される際に、PropertyChangedのチェーンを確実に解除するために
-            // イベントハンドラーをsenderから解除するメソッドを隠蔽化した破棄対象オブジェクトを生成して返す
-            // Disposeはlistenerに任せる
-            return new DelegateDisposable(() => p_self.CollectionChanged -= l_handler);
-        }
-
-        public static IDisposable InitializeSynced<TObject, TTarget, TSource>(
+        public static IDisposable SynchronizeWith<TObject, TTarget, TSource>(
             this TObject p_self,
             ObservableCollection<TSource> p_items,
             Func<TSource, TTarget> p_getItem)

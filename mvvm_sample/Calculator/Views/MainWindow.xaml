@@ -12,12 +12,17 @@
     </Window.DataContext>
 
     <StackPanel>
-        <TextBox Text="{Binding X}" HorizontalAlignment="Stretch"/>
-        <Label Content="+" HorizontalAlignment="Center"/>
-        <TextBox Text="{Binding Y}" HorizontalAlignment="Stretch"/>
-        <Label Content="=" HorizontalAlignment="Center"/>
-        <TextBox Text="{Binding Result}" HorizontalAlignment="Stretch"/>
+        <Button Content="ADDTERM" Command="{Binding AddTermCommand}"/>
+        <Button Content="DELETETERM" Command="{Binding DeleteTermCommand}"/>
         <Button Content="ADD" Command="{Binding AddCommand}"/>
-        <Button Content="Hello" Command="{Binding HelloCommand}"/>
+        <TextBlock Text="{Binding Result}" HorizontalAlignment="Stretch"/>
+
+        <ListBox ItemsSource="{Binding Terms}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBox Text="{Binding Value}" HorizontalAlignment="Stretch"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </StackPanel>
 </Window>

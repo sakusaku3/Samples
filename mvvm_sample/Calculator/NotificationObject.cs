@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Calculator
 {
-    public class NotificationObject : INotifyPropertyChanged
+    class NotificationObject : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

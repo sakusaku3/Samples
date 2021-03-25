@@ -1,36 +1,27 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
 
 namespace Calculator.ViewModels
 {
-    public class MainViewModel : NotificationObject
+    class MainViewModel : NotificationObject
     {
+        #region Xaml公開プロパティ
         /// <summary>
-        /// X
+        /// 項リスト
         /// </summary>
-        public int X 
-        {
-            get { return this.model.X; }
-            set { this.model.X = value; }
-        }
+        public ObservableCollection<TermViewModel> Terms { get; } 
+            = new ObservableCollection<TermViewModel>();
 
         /// <summary>
-        /// Y
-        /// </summary>
-        public int Y 
-        {
-            get { return this.model.Y; }
-            set { this.model.Y = value; }
-        }
-
-        /// <summary>
-        /// Result 
+        /// 結果
         /// </summary>
         public int Result 
         {
             get { return this.model.Result; }
             set { this.model.Result = value; }
         }
+        #endregion
 
+        #region Xaml公開コマンド
         /// <summary>
         /// 足す
         /// </summary>
@@ -39,51 +30,60 @@ namespace Calculator.ViewModels
             get
             {
                 return this._addCommand ??= new DelegateCommand(
-                      this.model.AddExecute,
-                      this.model.CanAddExecute);
+                    this.model.AddExecute,
+                    this.model.CanAddExecute);
             }
         }
         private DelegateCommand _addCommand;
 
-        public DelegateCommand HelloCommand
+        /// <summary>
+        /// 項追加
+        /// </summary>
+        public DelegateCommand AddTermCommand
         {
             get
             {
-                return this._helloCommand ??= new DelegateCommand(
-                      () => this.HelloExecute(),
-                      () => true);
+                return this._addTermCommand ??= new DelegateCommand(
+                    this.model.AddNewTerm);
             }
         }
-        private DelegateCommand _helloCommand;
+        private DelegateCommand _addTermCommand;
 
-        public Messenger Messenger { get; } = new Messenger();
-
-        public void HelloExecute()
+        /// <summary>
+        /// 項削除
+        /// </summary>
+        public DelegateCommand DeleteTermCommand
         {
-            var msg = new DialogBoxMessage(this);
-            msg.Message = "さん、こんにちは。";
-            msg.Button = MessageBoxButton.YesNo;
-            this.Messenger.Send(this, msg);
-            if (msg.Result == MessageBoxResult.Yes)
+            get
             {
-                this.model.X = 2;
+                return this._deleteTermCommand ??= new DelegateCommand(
+                    this.model.DeleteTerm,
+                    this.model.CanDeleteTerm);
             }
         }
+        private DelegateCommand _deleteTermCommand;
+        #endregion
 
-        private readonly Models.Calculators model;
+        #region フィールド
+        /// <summary>
+        /// 加算器モデル
+        /// </summary>
+        private readonly Models.Adder model;
+        #endregion
 
+        #region コンストラクタ
         public MainViewModel() 
         {
-            this.model = new Models.Calculators();
+            this.model = new Models.Adder();
 
             this.model.AddPropertyChanged(
-                nameof(this.model.X), () => this.OnPropertyChanged(nameof(this.X)));
+                nameof(this.model.Result), 
+                () => this.OnPropertyChanged(nameof(this.Result)));
 
-            this.model.AddPropertyChanged(
-                nameof(this.model.Y), () => this.OnPropertyChanged(nameof(this.Y)));
-
-            this.model.AddPropertyChanged(
-                nameof(this.model.Result), () => this.OnPropertyChanged(nameof(this.Result)));
+            this.Terms.SynchronizeWith(
+                this.model.Terms,
+                x => new TermViewModel(x));
         }
+        #endregion
     }
 }

@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace Calculator
 {
-    public class Messenger
+    class Messenger
     {
         private readonly List<ActionInfo> list = new List<ActionInfo>();
 

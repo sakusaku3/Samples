@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace Calculator
 {
-    public class DialogBoxAction : IViewAction
+    class DialogBoxAction : IViewAction
     {
         private static void ShowMessage(DialogBoxMessage msg)
         {

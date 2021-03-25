@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace Calculator
 {
-    public class ActionCollection : Freezable
+    class ActionCollection : Freezable
     {
         public Collection<IViewAction> Collection { get; } = new Collection<IViewAction>();
 

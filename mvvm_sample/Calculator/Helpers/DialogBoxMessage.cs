@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace Calculator
 {
-    public class DialogBoxMessage : VmMessage
+    class DialogBoxMessage : VmMessage
     {
         public string Message { get; set; }
         public MessageBoxButton Button { get; set; }

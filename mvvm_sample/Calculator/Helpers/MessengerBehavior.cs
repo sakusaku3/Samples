@@ -2,7 +2,7 @@
 
 namespace Calculator
 {
-    public class MessengerBehavior
+    class MessengerBehavior
     {
         public static readonly DependencyProperty ActionsProperty =
             DependencyProperty.RegisterAttached(
